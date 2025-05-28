@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/routes/AdminRoutes.jsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1748452862602,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1748452862602,
+            "name": "Commit-0",
+            "content": "// AdminRoutes.jsx\r\nimport { Routes, Route, Navigate } from \"react-router-dom\";\r\nimport { isAuthenticated, hasRole } from \"../utils/auth\";\r\nimport DashboardAdmin from \"../pages/Admin/DashboardAdmin\";\r\nimport GestionEleves from \"../pages/Admin/GestionEleves\";\r\nimport GestionEnseignant from \"../pages/Admin/GestionEnseignant\";\r\nimport GestionClasse from \"../pages/Admin/GestionClasse\";\r\nimport GestionSpecialite from \"../pages/Admin/GestionSpecialite\";\r\n\r\nfunction AdminRoutes() {\r\n  if (!isAuthenticated() || !hasRole(\"Admin\")) {\r\n    return <Navigate to=\"/\" />;\r\n  }\r\n\r\n  return (\r\n    <Routes>\r\n      <Route path=\"dashboard\" element={<DashboardAdmin />}>\r\n        <Route path=\"eleves\" element={<GestionEleves />} />\r\n        <Route path=\"enseignants\" element={<GestionEnseignant />} />\r\n        <Route path=\"classes\" element={<GestionClasse />} />\r\n        <Route path=\"specialites\" element={<GestionSpecialite />} />\r\n      </Route>\r\n    </Routes>\r\n  );\r\n}\r\n\r\nexport default AdminRoutes;\r\n"
+        }
+    ]
+}

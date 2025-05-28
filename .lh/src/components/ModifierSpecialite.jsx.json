@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/components/ModifierSpecialite.jsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1748454752488,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1748454752488,
+            "name": "Commit-0",
+            "content": "import React, { useState } from \"react\";\r\nimport ApiSpecialite from \"../Api/Specialite\";\r\n\r\n\r\nfunction ModifierSpecialite({ isOpen, onClose, specialite, fetchdata }) {\r\n  const [label, setLabel] = useState(specialite.label);\r\n  const [error, setError] = useState(null);\r\n  const [loading, setLoading] = useState(false);\r\n\r\n  const handleSubmit = async (e) => {\r\n    e.preventDefault();\r\n    setLoading(true);\r\n    setError(null);\r\n\r\n    try {\r\n      const response = await fetch(ApiSpecialite.modifierSpecilaite.url, {\r\n        method: ApiSpecialite.modifierSpecilaite.method,\r\n        credentials: \"include\",\r\n        headers: {\r\n          \"Content-Type\": \"application/json\",\r\n        },\r\n        body: JSON.stringify({\r\n          idSpecialite: specialite._id,\r\n          label,\r\n        }),\r\n      });\r\n\r\n      const data = await response.json();\r\n      if (data.success) {\r\n        await fetchdata(); // Refresh the specialties list\r\n        onClose(); // Close the modal\r\n      } else {\r\n        setError(data.msg || \"Erreur lors de la modification\");\r\n      }\r\n    } catch (err) {\r\n      setError(\"Erreur serveur, veuillez réessayer\");\r\n    } finally {\r\n      setLoading(false);\r\n    }\r\n  };\r\n\r\n  if (!isOpen) return null;\r\n\r\n  return (\r\n    <div className=\"fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50\">\r\n      <div className=\"bg-white p-6 rounded-lg shadow-lg w-full max-w-md\">\r\n        <h2 className=\"text-xl font-semibold mb-4\">Modifier Spécialité</h2>\r\n        {error && <p className=\"text-red-500 mb-4\">{error}</p>}\r\n        <form onSubmit={handleSubmit}>\r\n          <div className=\"mb-4\">\r\n            <label className=\"block text-gray-700 mb-2\" htmlFor=\"label\">\r\n              Label\r\n            </label>\r\n            <input\r\n              type=\"text\"\r\n              id=\"label\"\r\n              value={label}\r\n              onChange={(e) => setLabel(e.target.value)}\r\n              className=\"w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300\"\r\n              required\r\n            />\r\n          </div>\r\n          <div className=\"flex justify-end gap-2\">\r\n            <button\r\n              type=\"button\"\r\n              onClick={onClose}\r\n              className=\"px-4 py-2 bg-gray-200 rounded hover:bg-gray-300\"\r\n            >\r\n              Annuler\r\n            </button>\r\n            <button\r\n              type=\"submit\"\r\n              disabled={loading}\r\n              className={`px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 ${\r\n                loading ? \"opacity-50 cursor-not-allowed\" : \"\"\r\n              }`}\r\n            >\r\n              {loading ? \"Enregistrement...\" : \"Enregistrer\"}\r\n            </button>\r\n          </div>\r\n        </form>\r\n      </div>\r\n    </div>\r\n  );\r\n}\r\n\r\nexport default ModifierSpecialite;"
+        }
+    ]
+}

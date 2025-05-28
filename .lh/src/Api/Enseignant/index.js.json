@@ -1,0 +1,26 @@
+{
+    "sourceFile": "src/Api/Enseignant/index.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1748456825715,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1748459511259,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,8 +23,12 @@\n   getEnseignantById: {\r\n     url: `${apiUrl}/api/getEnseignantById`,\r\n     method: \"post\",\r\n   },\r\n+  updateEnseignant: {\r\n+    url: \"/api/enseignant/updateEnseignant\",\r\n+    method: \"PUT\",\r\n+  },\r\n \r\n   getclasseEnseignant: {\r\n     url: `${apiUrl}/api/getclasseEnseignant`,\r\n     method: \"post\",\r\n"
+                },
+                {
+                    "date": 1748459542860,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n     url: `${apiUrl}/api/getEnseignantById`,\r\n     method: \"post\",\r\n   },\r\n   updateEnseignant: {\r\n-    url: \"/api/enseignant/updateEnseignant\",\r\n+    url:`${apiUrl}/api/updateEnseignant`,\r\n     method: \"PUT\",\r\n   },\r\n \r\n   getclasseEnseignant: {\r\n"
+                }
+            ],
+            "date": 1748456825715,
+            "name": "Commit-0",
+            "content": "const apiUrl = \"http://localhost:5000\";\r\n\r\nconst ApiEnseignant = {\r\n  login: {\r\n    url: `${apiUrl}/api/loginEns`,\r\n    method: \"post\",\r\n  },\r\n\r\n  getAllEnseignantByClasse: {\r\n    url: `${apiUrl}/api/Allenseignant`,\r\n    method: \"post\",\r\n  },\r\n\r\n  AjouterEnseignant: {\r\n    url: `${apiUrl}/api/enseignant`,\r\n    method: \"post\",\r\n  },\r\n\r\n  CurrentEnseignant: {\r\n    url: `${apiUrl}/api/currentEnseignant`,\r\n    method: \"get\",\r\n  },\r\n  getEnseignantById:{\r\n   url: `${apiUrl}/api/getEnseignantById`,\r\n    method: \"post\",\r\n  },\r\n\r\n  getclasseEnseignant: {\r\n    url: `${apiUrl}/api/getclasseEnseignant`,\r\n    method: \"post\",\r\n  },\r\n\r\n  coursbyEnseignant: {\r\n    url: `${apiUrl}/api/coursbyEnseignant`,\r\n    method: \"post\",\r\n  },\r\n\r\n  ajouterCours: {\r\n    url: `${apiUrl}/api/cours`,\r\n    method: \"POST\",\r\n  },\r\n\r\n  getactivitesbyCours: {\r\n    url: `${apiUrl}/api/getactivites`,\r\n    method: \"POST\",\r\n  },\r\n\r\n  AjouterActivites: {\r\n    url: `${apiUrl}/api/activite`,\r\n    method: \"POST\",\r\n  },\r\n\r\n  getActivitesById: {\r\n    url: `${apiUrl}/api/getActivitesById`,\r\n    method: \"POST\",\r\n  },\r\n\r\n  getCommantaireByActivites: {\r\n    url: `${apiUrl}/api/findcomment`,\r\n    method: \"POST\",\r\n  },\r\n  AjouterNote: {\r\n    url: `${apiUrl}/api/note`,\r\n    method: \"POST\",\r\n  },\r\n\r\n  repondreCommentaire: {\r\n    url: `${apiUrl}/api/repondecommentaire`,\r\n    method: \"POST\",\r\n  },\r\n\r\n  getEnseignantsiedBar: {\r\n    url: `${apiUrl}/api/getEnseignantsiedBar`,\r\n    method: \"get\",\r\n  },\r\n\r\n  deleteActivites: {\r\n    url: `${apiUrl}/api/deleteActivites`,\r\n    method: \"POST\",\r\n  },\r\n};\r\n\r\nexport default ApiEnseignant;\r\n"
+        }
+    ]
+}

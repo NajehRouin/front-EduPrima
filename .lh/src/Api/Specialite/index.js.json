@@ -1,0 +1,22 @@
+{
+    "sourceFile": "src/Api/Specialite/index.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1748287879923,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1748454454067,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,7 +9,13 @@\n   getAllSpecialite: {\r\n     url: `${apiUrl}/api/specialite`,\r\n     method: \"GET\",\r\n   },\r\n+  modifierSpecilaite: {\r\n+    url: `${apiUrl}/api/modifierSpecilaite`,\r\n+    method: \"post\",\r\n+  },\r\n+\r\n+  \r\n };\r\n \r\n export default ApiSpecialite;\r\n"
+                }
+            ],
+            "date": 1748287879923,
+            "name": "Commit-0",
+            "content": "const apiUrl = \"http://localhost:5000\";\r\n\r\n\r\nconst ApiSpecialite = {\r\n  AjouterSpecialite: {\r\n    url: `${apiUrl}/api/specialite`,\r\n    method: \"post\",\r\n  },\r\n\r\n    getAllSpecialite: {\r\n    url: `${apiUrl}/api/specialite`,\r\n    method: \"GET\",\r\n  },\r\n \r\n};\r\n\r\nexport default ApiSpecialite;"
+        }
+    ]
+}
