@@ -2,42 +2,8 @@ import React, { useEffect, useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import ApiEnseignant from "../../Api/Enseignant";
 import AjouterCoursModal from "../../components/AjouterCoursModal";
-import AjouterCoursGeneralModal from "../../components/AjouterCoursGeneralModal ";
 import { useNavigate } from "react-router-dom";
-
-// Composant Modal de confirmation
-const ConfirmationModal = ({ isOpen, onClose, onConfirm, coursTitre }) => {
-  if (!isOpen) return null;
-
-  return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-6 w-96">
-        <h2 className="text-xl font-semibold mb-4">Confirmer la suppression</h2>
-        <p className="text-gray-600 mb-6">
-          Êtes-vous sûr de vouloir supprimer le cours "{coursTitre}" ? Cette
-          action est irréversible et supprimera également les ressources,
-          activités et dépôts associés.
-        </p>
-        <div className="flex justify-end space-x-4">
-          <button
-            className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md"
-            onClick={onClose}
-          >
-            Annuler
-          </button>
-          <button
-            className="bg-red-500 text-white px-4 py-2 rounded-md"
-            onClick={onConfirm}
-          >
-            Supprimer
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// Composant CoursCard
+import AjouterCoursGeneralModal from "../../components/AjouterCoursGeneralModal ";
 const CoursCard = ({
   titre,
   description,
@@ -46,27 +12,18 @@ const CoursCard = ({
   onDelete,
   detais,
   gereActivite,
-  coursId,
 }) => {
   const date = new Date(dateCreation);
   const formattedDate = `${date.getDate()}/${
     date.getMonth() + 1
   }/${date.getFullYear()}`;
   const numberOfActivities = activites.length;
-  const [showModal, setShowModal] = useState(false);
-
-  const handleDelete = () => {
-    setShowModal(true);
-  };
 
   return (
     <div className="bg-white shadow-lg rounded-lg p-4 m-4 w-80">
       <div className="flex justify-between items-center mb-2">
         <h3 className="text-xl font-bold">{titre}</h3>
-        <button
-          onClick={handleDelete}
-          className="text-red-500 hover:text-red-700"
-        >
+        <button onClick={onDelete} className="text-red-500 hover:text-red-700">
           <FaTrash />
         </button>
       </div>
@@ -89,23 +46,13 @@ const CoursCard = ({
           Gérer les Activités
         </button>
       </div>
-      <ConfirmationModal
-        isOpen={showModal}
-        onClose={() => setShowModal(false)}
-        onConfirm={() => {
-          onDelete(coursId);
-          setShowModal(false);
-        }}
-        coursTitre={titre}
-      />
     </div>
   );
 };
 
-// Composant CoursGroupes
-const CoursGroupes = ({ data, onAddCours, onDeleteCours }) => {
+const CoursGroupes = ({ data, onAddCours }) => {
   const [pagination, setPagination] = useState({});
-  const [searchTerms, setSearchTerms] = useState({});
+  const [searchTerms, setSearchTerms] = useState({}); // 🆕 chaque classe a son propre champ de recherche
   const navigate = useNavigate();
   const itemsPerPage = 3;
 
@@ -158,6 +105,7 @@ const CoursGroupes = ({ data, onAddCours, onDeleteCours }) => {
                   <h3 className="text-xl text-gray-600">{classe.niveau}</h3>
                 </div>
                 <div className="flex flex-col sm:flex-row items-center gap-2">
+                  {/* Champ de recherche par classe */}
                   <input
                     type="text"
                     placeholder="Rechercher un cours..."
@@ -184,8 +132,9 @@ const CoursGroupes = ({ data, onAddCours, onDeleteCours }) => {
                       description={cours.description}
                       dateCreation={cours.dateCreation}
                       activites={cours.activites}
-                      coursId={cours._id}
-                      onDelete={onDeleteCours}
+                      onDelete={() =>
+                        console.log("Supprimer cours id:", cours._id)
+                      }
                       detais={() => handleVoirPlus(cours?.resource?.lienUrl)}
                       gereActivite={() =>
                         navigate("/enseignant/dashboard/activites", {
@@ -230,13 +179,11 @@ const CoursGroupes = ({ data, onAddCours, onDeleteCours }) => {
   );
 };
 
-// Composant principal GestionCours
 function GestionCours() {
-  const [coursData, setCoursData] = useState([]);
+  const [coursData, SetCoursData] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedClasseId, setSelectedClasseId] = useState(null);
-  const [modalfirstCours, setModalFirstCours] = useState(false);
-
+  const [modalfirstCours, SetModalFirstCours] = useState(false);
   const getCours = async () => {
     try {
       const response = await fetch(ApiEnseignant.coursbyEnseignant.url, {
@@ -248,32 +195,9 @@ function GestionCours() {
       });
 
       const responseData = await response.json();
-      setCoursData(responseData?.result || []);
+      SetCoursData(responseData?.result || []);
     } catch (error) {
       console.log("er", error);
-    }
-  };
-
-  const handleDeleteCours = async (coursId) => {
-    try {
-      const response = await fetch(ApiEnseignant.deleteCoursById.url, {
-        method: ApiEnseignant.deleteCoursById.method,
-        credentials: "include",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({ idCours: coursId }),
-      });
-
-      const responseData = await response.json();
-      if (responseData.success) {
-        // Rafraîchir les données après suppression
-        await getCours();
-      } else {
-        console.error("Erreur lors de la suppression:", responseData.msg);
-      }
-    } catch (error) {
-      console.error("Erreur lors de la suppression:", error);
     }
   };
 
@@ -287,7 +211,7 @@ function GestionCours() {
         <div className="flex justify-end">
           <button
             className="bg-indigo-500 text-white px-4 py-2 rounded-md"
-            onClick={() => setModalFirstCours(true)}
+            onClick={() => SetModalFirstCours(true)}
           >
             Ajouter un cours
           </button>
@@ -297,7 +221,7 @@ function GestionCours() {
           <div className="flex justify-end">
             <button
               className="bg-indigo-500 text-white px-4 py-2 rounded-md"
-              onClick={() => setModalFirstCours(true)}
+              onClick={() => SetModalFirstCours(true)}
             >
               Ajouter un cours
             </button>
@@ -308,7 +232,6 @@ function GestionCours() {
               setSelectedClasseId(classeId);
               setShowModal(true);
             }}
-            onDeleteCours={handleDeleteCours}
           />
         </>
       )}
@@ -325,7 +248,7 @@ function GestionCours() {
       {modalfirstCours && (
         <AjouterCoursGeneralModal
           isOpen={modalfirstCours}
-          onClose={() => setModalFirstCours(false)}
+          onClose={() => SetModalFirstCours(false)}
           fetchdata={getCours}
         />
       )}

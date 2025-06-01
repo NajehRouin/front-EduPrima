@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import ApiEnseignant from "../../Api/Enseignant";
 import AjouterCoursModal from "../../components/AjouterCoursModal";
-import AjouterCoursGeneralModal from "../../components/AjouterCoursGeneralModal ";
+import AjouterCoursGeneralModal from "../../components/AjouterCoursGeneralModal";
 import { useNavigate } from "react-router-dom";
 
 // Composant Modal de confirmation
